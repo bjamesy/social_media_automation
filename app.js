@@ -3,8 +3,17 @@ const express      = require('express');
 const path         = require('path');
 const cookieParser = require('cookie-parser');
 const logger       = require('morgan');
+const mongoose     = require('mongoose');
 
 const app = express();
+
+(async function dbConnect() {
+  await mongoose.connect(`mongodb://localhost/${ process.env.DB }`, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+  });  
+  console.log("connected to mongo")
+})();
 
 app.use(logger('dev'));
 app.use(express.json());
